@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
+import AppNavigator from './src/components/navigation/Index';
 
 export default function App() {
+  const [state,setState] = useState({isLoading:false,userToken:null});
+
+  useEffect(()=>{
+
+    // setTimeout(()=>setState({isLoading:false,userToken:"null"}),5000);
+  
+
+  },[]);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+      <AppNavigator state={state} />
+    </KeyboardAvoidingView>
+     
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
 });
