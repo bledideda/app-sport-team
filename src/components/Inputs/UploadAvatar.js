@@ -21,25 +21,21 @@ export default function UploadAvatar(props) {
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
                 aspect: [1, 1],
-                quality: 1,
-                base64:true
+                quality: 1
             });
         }else {
             result = await ImagePicker.launchCameraAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
                 aspect: [1, 1],
-                quality: 1,
-                base64: true
+                quality: 1
             });
         }
 
-        console.log(result);
-
         if (!result.cancelled) {
             setImage(result.uri);
-                if(onPhotoUpload){
-                    onPhotoUpload()
+            if(onPhotoUpload){
+                onPhotoUpload({uri:result.uri})
             }
         }
     }
@@ -61,7 +57,6 @@ export default function UploadAvatar(props) {
     };
 
     const openCamera = async () => {
-        // console.log(status);
         if(!statusCamera.granted){
             if(statusCamera.canAskAgain){
                 requestPermissionCamera().then((res)=>{
