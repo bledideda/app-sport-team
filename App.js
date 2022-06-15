@@ -16,7 +16,6 @@ export default function App() {
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <AppNavigator state={state} />
     </KeyboardAvoidingView>
-     
   );
 }
 

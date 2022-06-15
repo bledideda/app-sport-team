@@ -2,9 +2,20 @@ import { TextInput, View, StyleSheet,Text } from "react-native";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; 
 
 export default function TextInputSimple(props){
+
+    const customStyle = {}
+
+    if(props.height){
+        customStyle.height = props.height
+    }
+
+    if(props.borderRadius){
+        customStyle.borderRadius = props.borderRadius
+    }
+
     return (
-        <View style={styles.inputcContainer}>
-            <TextInput {...props} style={styles.inputStyle}></TextInput>
+        <View style={[styles.inputcContainer, customStyle ]}>
+            <TextInput {...props} style={[styles.inputStyle,props.style]}></TextInput>
         </View>
     )
 }

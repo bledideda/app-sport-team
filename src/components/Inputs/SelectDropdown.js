@@ -6,7 +6,7 @@ export default function SelectDropdown(props){
 
     const [selected, setSelected] = useState();
     const [visibleModal,setVisibleModal] = useState(false);
-    const {placeholder,optionKey,optionName,options} = props;
+    const {placeholder,optionKey,optionName,options,onSelect} = props;
 
     const   _renderModalContent = () => (
         <View style={styles.centeredView}>
@@ -18,6 +18,7 @@ export default function SelectDropdown(props){
                                 <TouchableOpacity key={option[optionKey]} style={styles.selectOption} onPress={()=>{
                                     setSelected(option);
                                     setVisibleModal(false);
+                                    onSelect && onSelect(option[optionKey])
                                 }}>
                                     <Text style={{fontSize:18}}> {option[optionName]}</Text>
                                 </TouchableOpacity>

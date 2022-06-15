@@ -2,7 +2,8 @@ import { useState } from "react";
 import { 
     View, 
     StyleSheet,
-    Text
+    Text,
+    TouchableOpacity
 } from "react-native";
 
 import PublicHeader from "../../components/headers/PublicHeader";
@@ -13,34 +14,49 @@ import TextInputSimple from "../../components/Inputs/TextInputSimple";
 import TextInputWithIcon from "../../components/Inputs/TextInputWithIcon";
 import UploadAvatar from "../../components/Inputs/UploadAvatar";
 import DeviceInfo from "../../constants/DeviceInfo";
+import StaticData from "../../constants/StaticData";
+import { ValidatePhone } from "../../validation/ValidateInputs";
 import PublicScreensTemplate from "../templates/PublicScreensTemplate";
 
 const { windowHeight } = DeviceInfo;
 
-
-const cities = [
-    {id:"1",name:"Tirane"}, 
-    {id:"2",name:"Durres"},
-    {id:"5",name:"Elbasan"},
-    {id:"3",name:"Berat"}, 
-    {id:"4",name:"Peshkopi"},
-    {id:"6",name:"Sarande"},
-    {id:"7",name:"Vlore"},
-    {id:"8",name:"Kukes"},
-    {id:"9",name:"Mirdite"},
-    {id:"10",name:"Kavaje"},
-];
-
+const cities = StaticData.citiesObject;
+// console.log(cities.length);
 export default function RegisterScreen(props)
 {  
     
-    const { navigation:{ push } } = props;
+    const { navigation:{ push, pop } } = props;
     const [gender, setGender] = useState(false);
     const [avatarUri, setAvatarUri] = useState(false);
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
+    const [birthYear,setBirthYear] = useState("");
+    const [city, setCity] = useState("");
+
+    const validateStep = () => {
+        
+    }
+
+    const goTonextStep = () => {
+        // let phoneValid = ValidatePhone(phone);
+        // console.log(phoneValid);
+
+        const userData = {
+            gender,
+            avatarUri,
+            fullName,
+            password,
+            confirmPassword,
+            phone,
+            birthYear,
+            city
+        }
+
+        push('ConfirmCode', userData);
+    }
+    
     return (
        <PublicScreensTemplate>
 
@@ -58,7 +74,7 @@ export default function RegisterScreen(props)
 
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:2}}>
-                        <TextInputSimple placeholder="Viti i lindjes"  keyboardType="numeric" maxLength={4} />
+                        <TextInputSimple placeholder="Viti i lindjes"  keyboardType="numeric" maxLength={4} value={birthYear} onChangeText={setBirthYear} />
                     </View>
                     <View style={{flex:3}}>
                         <RadioInput onSelect={({selected})=>setGender(selected)} options={[{value:'M',label:'Mashkull'},{value:'F',label:'Femer'}]} label="Gjinia"/>
@@ -67,18 +83,13 @@ export default function RegisterScreen(props)
 
                 <TextInputSimple placeholder="Nr. Tel"  keyboardType="phone-pad" value={phone} onChangeText={setPhone} maxLength={14} />
                
-                <SelectDropdown placeholder="Vendbanimi" options={cities} optionKey={'id'} optionName={'name'} />
+                <SelectDropdown placeholder="Vendbanimi" options={cities} optionKey={'id'} optionName={'name'} onSelect={setCity} />
 
-                <SubmitButton title="Vazhdo"/>
-
-
-                {/* <TouchableOpacity>
-                    <Text style={styles.loginText}>Keni harruar fjalekalimin?</Text>
-                </TouchableOpacity>
+                <SubmitButton onPress={goTonextStep} title="Vazhdo" iconRight="arrow-right"/>
             
-                <TouchableOpacity style={{marginTop:100}} onPress={()=>push('Register')}>
-                    <Text style={styles.loginText}>Nuk keni nje llogari? <Text style={{fontWeight:'800'}}>Rregjistrohu</Text></Text>
-                </TouchableOpacity> */}
+                <TouchableOpacity style={{marginTop:30}} onPress={()=>pop()}>
+                    <Text style={styles.loginText}>Keni nje llogari? <Text style={{fontWeight:'800'}}>Hyr</Text></Text>
+                </TouchableOpacity>
                 
             </View>
 
