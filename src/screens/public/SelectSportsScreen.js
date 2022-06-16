@@ -21,31 +21,37 @@ const { windowHeight } = DeviceInfo;
 export default function SelectSportsScreen(props)
 {
 
-    const {route, navigation} = props;
+    const {route, navigation:{push}} = props;
     const { phone } = route.params;
 
 
     const [selectedSports, setSelectedSports] = useState([]);
-    const [selectedSportIds,setSelectedSportIds]=useState([]);
-
-    console.log(phone);
+    const [selectedSportIds,setSelectedSportIds] = useState([]);
 
     const goTonextStep = () => {
-        push('SelectSports', route.params);
+        if(selectedSports.length){
+          return push('SelectPositions', {selectedSports});
+        }
+        alert('Ju lutem zgjidhni nje sport !')
     }
 
-   const selectSport = (sport) => {
+    const selectSport = (sport) => {
         if(!selectedSportIds.includes(sport.id)){
             setSelectedSportIds([...selectedSportIds,sport.id]);
             setSelectedSports([...selectedSports,sport]);
         }
     }
-
+    
+    const removeSelectedSport = (index) => {
+        selectedSportIds.splice(index, 1);
+        selectedSports.splice(index, 1);
+        setSelectedSportIds([...selectedSportIds]);
+        setSelectedSports([...selectedSports]);
+    }
 
     const _renderSport  = (sport) => {
       
         let isSelected = selectedSportIds.includes(sport.id);
-        let opacity = isSelected ? 1 : 0.5;
         if(isSelected){
             return  (
                 <View key={sport.id.toString()} style={{
@@ -96,12 +102,23 @@ export default function SelectSportsScreen(props)
               
 
                 <Text style={{marginBottom:15,width:'100%'}}>Zgjidhni sportet tuaja</Text>
-        
-                {
-                    selectedSports.map((sport)=>{
-                        return (<View key={sport.id}><Text>{sport.name}</Text></View>)
-                    })
-                }
+                <View style={{flexDirection:'row',flexWrap:'wrap',marginBottom:30}}>
+                    {
+                        selectedSports.map((sport,index)=> {
+                            return (
+                                <View key={sport.id} style={styles.bulletSelect}>
+                                    <View style={styles.bulletTimes}>
+                                        <Text style={{color:'#101C29',fontSize:12}}>{sport.name}</Text>
+                                        <TouchableOpacity style={styles.timesButton} onPress={()=>removeSelectedSport(index)}>
+                                            <AppIcon name={'times'} style={{width: 14}} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            )
+                        })
+                    }
+                </View>
+              
 
                 
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
@@ -133,6 +150,28 @@ const styles = StyleSheet.create({
     loginText:{
         color:'#08c47d',
         textAlign:'center'
+    },
+    bulletSelect: {
+        width: (100/3)+'%',
+        // backgroundColor:'red',
+        padding: 5,
+    },
+    bulletTimes:{
+        backgroundColor:'#E6EDEA',
+        borderRadius:20,
+        paddingVertical:10,
+        paddingHorizontal:10,
+        flexDirection:'row'
+    },
+    timesButton:{
+        width: 30,
+        height: 35,
+        // backgroundColor:'blue',
+        position:'absolute',
+        right:0,
+        top: 0,
+        alignItems:'flex-end',
+        justifyContent:'center',
+        paddingRight:10,
     }
-    
  });

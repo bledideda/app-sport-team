@@ -6,6 +6,9 @@ import Football from "../../../assets/icons/football.png";
 import Basketball from "../../../assets/icons/basketball.png";
 import Voleyball from "../../../assets/icons/voleyball.png";
 import Tenis from "../../../assets/icons/tenis.png";
+import Times from "../../../assets/icons/times.png";
+import ArrowUp from "../../../assets/icons/arrow-up.png";
+import ArrowDown from "../../../assets/icons/arrow-down.png";
 
 const icons = {
     sms: SMS,
@@ -13,7 +16,10 @@ const icons = {
     football:Football,
     basketball:Basketball,
     voleyball:Voleyball,
-    tenis:Tenis
+    tenis:Tenis,
+    times: Times,
+    arrowUp: ArrowUp,
+    arrowDown: ArrowDown
 }
 
 
