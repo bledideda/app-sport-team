@@ -3,12 +3,15 @@ import AuthScreens from "./AuthScreens";
 import PublicScreens from "./PublicScreens";
 
 export default function MainNavigator(props){
-    const { state } = props.state? props : { state:{ userToken: 'hhghgh', isLoading:true }};
+   
+    const { state } = props.state? props : { state:{ isLoading:true }};
+
     if (state.isLoading) {
         // We haven't finished checking for the token yet
         return <View><Text>SplashScreen</Text></View>;
     }
-    if(state.userToken == null){
+
+    if(state.userToken === null){
         return <PublicScreens />
     }
       

@@ -130,11 +130,8 @@ const styles = StyleSheet.create({
         top: 0,
         alignItems:'flex-end',
         justifyContent:'center',
-        paddingRight:10,
+        paddingRight:10
     },
-
-
-
     positionSelector:{
         width: '100%',
         marginBottom:10,

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { 
     View, 
     StyleSheet,
     Text,
     TouchableOpacity
 } from "react-native";
+
+import { getCities } from "../../api/AppApi";
 
 import PublicHeader from "../../components/headers/PublicHeader";
 import RadioInput from "../../components/Inputs/RadioInput";
@@ -20,7 +22,7 @@ import PublicScreensTemplate from "../templates/PublicScreensTemplate";
 
 const { windowHeight } = DeviceInfo;
 
-const cities = StaticData.citiesObject;
+// const cities = StaticData.citiesObject;
 // console.log(cities.length);
 export default function RegisterScreen(props)
 {  
@@ -34,10 +36,26 @@ export default function RegisterScreen(props)
     const [phone, setPhone] = useState("");
     const [birthYear,setBirthYear] = useState("");
     const [city, setCity] = useState("");
+    const [cities,setCities] = useState([]);
+
+
+
+
+    useEffect(()=>{
+        getCities().then((res)=>{
+            if(res.statusCode === 200) {
+                setCities(res.data.cities);
+            }else {
+                alert("Check network connection");
+            }
+        });
+    },[])
 
     const validateStep = () => {
         
     }
+
+
 
     const goTonextStep = () => {
         // let phoneValid = ValidatePhone(phone);
@@ -83,7 +101,7 @@ export default function RegisterScreen(props)
 
                 <TextInputSimple placeholder="Nr. Tel"  keyboardType="phone-pad" value={phone} onChangeText={setPhone} maxLength={14} />
                
-                <SelectDropdown placeholder="Vendbanimi" options={cities} optionKey={'id'} optionName={'name'} onSelect={setCity} />
+                <SelectDropdown placeholder="Vendbanimi" options={cities} onSelect={setCity} />
 
                 <SubmitButton onPress={goTonextStep} title="Vazhdo" iconRight="arrow-right"/>
             

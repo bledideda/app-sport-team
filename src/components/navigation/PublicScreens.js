@@ -7,16 +7,15 @@ import SelectSportsScreen from '../../screens/public/SelectSportsScreen';
 
 const Stack = createNativeStackNavigator();
 
-export default function PublicScreens(){
+export default function PublicScreens(props){
+    console.log(props);
     return (
         <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={LoginScreen} options={{header:()=>null}}/>
+            <Stack.Screen name="Login" component={LoginScreen} options={{header:()=>null}} />
             <Stack.Screen name="Register" component={RegisterScreen} options={{header:()=>null}} />
             <Stack.Screen name="ConfirmCode" component={ConfirmCodeScreen} options={{header:()=>null}} />
             <Stack.Screen name="SelectSports" component={SelectSportsScreen} options={{header:()=>null}} />
-            
             <Stack.Screen name="SelectPositions" component={SelectPositionsScreen} options={{header:()=>null}} />
-           
         </Stack.Navigator>
     )
 }

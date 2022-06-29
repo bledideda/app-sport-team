@@ -8,19 +8,19 @@ export default function SelectDropdown(props){
     const [visibleModal,setVisibleModal] = useState(false);
     const {placeholder,optionKey,optionName,options,onSelect} = props;
 
-    const   _renderModalContent = () => (
+    const _renderModalContent = () => (
         <View style={styles.centeredView}>
             <View style={styles.modalContent}>
                 <ScrollView style={styles.selectOptions}>
                     <View style={{paddingVertical:5}}>
                         {options && options.map(option=>{
                             return (
-                                <TouchableOpacity key={option[optionKey]} style={styles.selectOption} onPress={()=>{
+                                <TouchableOpacity key={optionKey?option[optionKey]:option} style={styles.selectOption} onPress={()=>{
                                     setSelected(option);
                                     setVisibleModal(false);
-                                    onSelect && onSelect(option[optionKey])
+                                    onSelect && onSelect(optionKey?option[optionKey]:option)
                                 }}>
-                                    <Text style={{fontSize:18}}> {option[optionName]}</Text>
+                                    <Text style={{fontSize:18}}> {optionName?option[optionName]:option}</Text>
                                 </TouchableOpacity>
                             )
                         })}
@@ -33,10 +33,17 @@ export default function SelectDropdown(props){
         </View>
     );
 
+    const _renderSelected = () =>{
+        if(selected){
+           return <Text style={styles.inputStyle}>{optionName? selected[optionName] : selected }</Text>
+        }
+        return <Text style={styles.inputStyle}>{placeholder}</Text>
+    }
+
     return (
         <View>
             <TouchableOpacity style={styles.inputcContainer} onPress={()=>setVisibleModal(true)}>
-                <Text style={styles.inputStyle}>{selected?selected.name: placeholder}</Text>
+                {_renderSelected()}
                 <View style={styles.iconContainer}>
                     <FontAwesome5 name={'angle-down'} size={18} color="#022b64" />
                 </View>

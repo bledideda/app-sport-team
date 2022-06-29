@@ -1,5 +1,3 @@
-import AppIcon from "../components/icons/AppIcon";
-
 const cities = [
     "Tirana",
     "Durrësi",
@@ -67,6 +65,7 @@ const cities = [
     "Krasta",
     "Kërraba"
 ];
+
 const citiesObject = [
     {"id":"1","name":"Tirana"},
     {"id":"2","name":"Durrësi"},
@@ -134,7 +133,6 @@ const citiesObject = [
     {"id":"64","name":"Krasta"},
     {"id":"65","name":"Kërraba"}
 ];
-
 
 const sports = [
     {
